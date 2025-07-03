@@ -1,10 +1,14 @@
 package com.example.backend.Services;
 
 import com.example.backend.Models.Task;
+import com.example.backend.Models.UserPrincipal;
+import com.example.backend.Models.Users;
 import com.example.backend.Repositories.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -14,14 +18,23 @@ public class TaskService {
     TaskRepo repo;
 
     public void addTask(Task task) {
+        Users user = getCurrentUser();
+        task.setUser(user);
         repo.save(task);
     }
 
     public List<Task> getTasks() {
-        return repo.findAll();
+        Users user = getCurrentUser();
+        return repo.findByUser(user);
     }
 
     public Task getTask(int taskID) {
-        return repo.findById(taskID).orElse(null);
+        Users user = getCurrentUser();
+        return repo.findByUserAndId(user, taskID);
+    }
+
+    private Users getCurrentUser() {
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userPrincipal.getUser();
     }
 }

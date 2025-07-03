@@ -9,6 +9,48 @@ const api = axios.create({
   },
 });
 
+// Authentication API
+export const authAPI = {
+  setAuthHeader: (username, password) => {
+    const credentials = btoa(`${username}:${password}`);
+    api.defaults.headers.common['Authorization'] = `Basic ${credentials}`;
+  },
+
+  clearAuthHeader: () => {
+    delete api.defaults.headers.common['Authorization'];
+  },
+
+  login: async (username, password) => {
+    try {
+      // Set auth header for this request
+      const credentials = btoa(`${username}:${password}`);
+      const response = await api.get('/tasks', {
+        headers: {
+          'Authorization': `Basic ${credentials}`
+        }
+      });
+      
+      // If successful, set the default header
+      authAPI.setAuthHeader(username, password);
+      return response.data;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw new Error('Invalid credentials');
+    }
+  },
+
+  register: async (userData) => {
+    try {
+      const response = await api.post('/register', userData);
+      return response.data;
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw new Error('Registration failed');
+    }
+  },
+};
+
+// Task API (unchanged but with authentication)
 export const taskAPI = {
   getAllTasks: async () => {
     try {
