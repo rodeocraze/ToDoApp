@@ -4,17 +4,17 @@ A minimalist, full-stack task management application built with **Spring Boot** 
 
 ![Zen Preview](https://img.shields.io/badge/Status-Active-green) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen) ![React](https://img.shields.io/badge/React-18.x-blue) ![Vite](https://img.shields.io/badge/Vite-Latest-purple)
 
-## 🚀 Features
+## Features
 
-- ✅ **Full CRUD Operations** - Create, Read, Update, Delete tasks
-- 🎯 **Priority System** - HIGH, MEDIUM, LOW priority levels with color coding
-- 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
-- 🎨 **Zen Design** - Clean, minimalist interface inspired by Notion
-- 🔄 **Real-time Updates** - Instant task updates across the application
-- 📊 **Task Management** - Detailed task views with creation/update timestamps
-- 🛣️ **React Router** - Multi-page navigation with clean URLs
+- **Full CRUD Operations** - Create, Read, Update, Delete tasks
+- **Priority System** - HIGH, MEDIUM, LOW priority levels with color coding
+- **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
+- **Zen Design** - Clean, minimalist interface inspired by Notion
+- **Real-time Updates** - Instant task updates across the application
+- **Task Management** - Detailed task views with creation/update timestamps
+- **React Router** - Multi-page navigation with clean URLs
 
-## 🏗️ Architecture
+## Architecture
 
 ### Backend (Spring Boot)
 - **Framework**: Spring Boot 3.x with Maven
@@ -29,7 +29,7 @@ A minimalist, full-stack task management application built with **Spring Boot** 
 - **State Management**: Custom hooks with React hooks
 - **Styling**: Modern CSS with responsive design
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Zen/
@@ -50,14 +50,14 @@ Zen/
 └── README.md
 ```
 
-## 🛠️ Prerequisites
+## Prerequisites
 
 - **Java 17+** (for Spring Boot backend)
 - **Node.js 18+** and **npm** (for React frontend)
 - **MySQL 8.0+** (for database)
 - **Maven** (for backend dependency management)
 
-## ⚡ Quick Start
+## Quick Start
 
 ### 1. Clone the Repository
 ```bash
@@ -85,7 +85,7 @@ npm run dev
 ```
 Frontend will run on `http://localhost:5173`
 
-## 🌐 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -105,13 +105,13 @@ Frontend will run on `http://localhost:5173`
 }
 ```
 
-## 🎨 UI Pages
+## UI Pages
 
 - **Home Page** (`/`) - Grid view of all tasks with clickable cards
 - **Add Task** (`/add-task`) - Form to create new tasks
 - **Task Details** (`/task/:id`) - Detailed view of individual tasks
 
-## 🔧 Configuration
+## Configuration
 
 ### Backend Configuration
 - **Database**: Configure in `application.properties`
@@ -123,7 +123,7 @@ Frontend will run on `http://localhost:5173`
 - **Base URL**: Points to backend at `localhost:8080`
 - **Port**: Default 5173
 
-## 🚀 Deployment
+## Deployment
 
 ### Backend Deployment
 ```bash
@@ -139,7 +139,7 @@ npm run build
 # Deploy the dist/ folder to your hosting service
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -147,14 +147,14 @@ npm run build
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 👨‍💻 Author
+## Author
 
 **RodeoCraze** - [GitHub Profile](https://github.com/RodeoCraze)
 
 ---
 
-⭐ If you found this project helpful, please give it a star! 
+If you found this project helpful, please give it a star! 
