@@ -64,7 +64,7 @@ const LoginPage = () => {
     <div className="auth-page">
       <div className="page-header">
         <h1>Welcome Back</h1>
-        <p>Sign in to your TodoApp account</p>
+        <p>Sign in to your Zen workspace</p>
       </div>
 
       <div className="auth-container">

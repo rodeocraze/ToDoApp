@@ -6,11 +6,10 @@ const WelcomePage = () => {
       <div className="welcome-hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            Welcome to <span className="brand-highlight">TodoApp</span>
+            <span className="brand-highlight">Zen</span>
           </h1>
           <p className="hero-description">
-            Organize your life, boost your productivity, and never miss a deadline again. 
-            TodoApp helps you manage tasks with ease and efficiency.
+            Make organizing easy. A minimalist approach to task management that brings clarity and calm to your busy life.
           </p>
           <div className="hero-actions">
             <Link to="/register" className="btn-primary hero-btn">
@@ -25,27 +24,27 @@ const WelcomePage = () => {
 
       <div className="features-section">
         <div className="features-container">
-          <h2 className="features-title">Why Choose TodoApp?</h2>
+          <h2 className="features-title">Why Choose Zen?</h2>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">📋</div>
-              <h3>Task Management</h3>
-              <p>Create, organize, and track your tasks with ease. Set priorities and due dates to stay on top of your work.</p>
+              <div className="feature-icon">🧘</div>
+              <h3>Mindful Organization</h3>
+              <p>Clean, distraction-free interface that helps you focus on what truly matters without overwhelming complexity.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🔒</div>
-              <h3>Secure & Private</h3>
-              <p>Your data is protected with industry-standard security. Each user has their own private workspace.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">⚡</div>
-              <h3>Fast & Responsive</h3>
-              <p>Built with modern technology for lightning-fast performance across all your devices.</p>
+              <div className="feature-icon">✨</div>
+              <h3>Effortless Simplicity</h3>
+              <p>Intuitive design that makes task management feel natural. No steep learning curves, just pure productivity.</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">🎯</div>
-              <h3>Priority System</h3>
-              <p>Mark tasks as high or low priority to focus on what matters most and boost your productivity.</p>
+              <h3>Clear Priorities</h3>
+              <p>Simple priority system that helps you identify what needs attention without decision fatigue.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🔒</div>
+              <h3>Private & Secure</h3>
+              <p>Your personal space for organization. Secure, private, and completely focused on your needs.</p>
             </div>
           </div>
         </div>
@@ -53,10 +52,10 @@ const WelcomePage = () => {
 
       <div className="cta-section">
         <div className="cta-content">
-          <h2>Ready to get organized?</h2>
-          <p>Join thousands of users who have transformed their productivity with TodoApp.</p>
+          <h2>Ready to find your zen?</h2>
+          <p>Join others who have discovered the peace of effortless organization.</p>
           <Link to="/register" className="btn-primary cta-btn">
-            Start Your Journey
+            Begin Your Journey
           </Link>
         </div>
       </div>

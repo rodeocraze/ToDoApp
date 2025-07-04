@@ -81,6 +81,26 @@ export const taskAPI = {
       throw new Error('Failed to add task');
     }
   },
+
+  updateTask: async (taskData) => {
+    try {
+      const response = await api.put('/tasks/update', taskData);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw new Error('Failed to update task');
+    }
+  },
+
+  deleteTask: async (taskId) => {
+    try {
+      const response = await api.delete(`/task/${taskId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      throw new Error('Failed to delete task');
+    }
+  },
 };
 
 export default api; 

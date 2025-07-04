@@ -6,10 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -22,8 +25,12 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
+    
     private String title;
-    public Date createdDate;
+    
+    @Column(name = "created_date")
+    public LocalDate createdDate;
+    
     public Date dueDate;
     public String description;
     public String category;
@@ -34,4 +41,10 @@ public class Task {
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
+    @PrePersist
+    protected void onCreate() {
+        if (createdDate == null) {
+            createdDate = LocalDate.now();
+        }
+    }
 }

@@ -37,4 +37,16 @@ public class TaskController {
         }
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
+
+    @PutMapping("/tasks/update")
+    public ResponseEntity<String> updateTask(@RequestBody Task task) {
+        service.updateTask(task);
+        return new ResponseEntity<>("Successfully updated task", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/task/{taskID}")
+    public ResponseEntity<String> deleteTask(@PathVariable int taskID) {
+        service.deleteTask(taskID);
+        return new ResponseEntity<>("Deleted task", HttpStatus.OK);
+    }
 }

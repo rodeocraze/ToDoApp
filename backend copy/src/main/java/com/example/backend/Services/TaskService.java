@@ -33,6 +33,16 @@ public class TaskService {
         return repo.findByUserAndId(user, taskID);
     }
 
+    public void updateTask(Task task) {
+        Users user = getCurrentUser();
+        task.setUser(user);
+        repo.save(task);
+    }
+
+    public void deleteTask(int taskID) {
+        repo.deleteById(taskID);
+    }
+
     private Users getCurrentUser() {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userPrincipal.getUser();

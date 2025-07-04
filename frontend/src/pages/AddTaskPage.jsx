@@ -77,7 +77,7 @@ const AddTaskPage = () => {
     <div className="add-task-page">
       <div className="page-header">
         <h1>Add New Task</h1>
-        <p>Create a new task to organize your day</p>
+        <p>Bring clarity to your goals, one task at a time</p>
       </div>
 
       <div className="form-container">

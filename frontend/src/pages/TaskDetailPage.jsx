@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { taskAPI } from '../services/api';
+import ConfirmDialog from '../components/ConfirmDialog';
 
 const TaskDetailPage = () => {
   const { taskId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -25,6 +30,35 @@ const TaskDetailPage = () => {
 
     fetchTask();
   }, [taskId]);
+
+  useEffect(() => {
+    // Check if we have a success message from navigation state
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
+      // Clear the message after 5 seconds
+      const timer = setTimeout(() => {
+        setSuccessMessage(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
+
+  const handleDeleteTask = async () => {
+    try {
+      setDeleting(true);
+      await taskAPI.deleteTask(task.id);
+      setShowDeleteDialog(false);
+      navigate('/', { 
+        state: { message: 'Task deleted successfully!' }
+      });
+    } catch (err) {
+      console.error('Error deleting task:', err);
+      setError(err.message || 'Failed to delete task');
+      setShowDeleteDialog(false);
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   const getPriorityColor = (priority) => {
     // Backend uses boolean: true = high priority, false = low priority
@@ -95,6 +129,12 @@ const TaskDetailPage = () => {
       </div>
 
       <div className="task-detail-container">
+        {successMessage && (
+          <div className="success-message">
+            {successMessage}
+          </div>
+        )}
+        
         <div className="task-detail-card">
           <div className="task-detail-header">
             <div className="task-title-section">
@@ -163,12 +203,33 @@ const TaskDetailPage = () => {
             >
               Back to All Tasks
             </button>
-            <Link to="/add-task" className="btn-primary">
+            <Link to={`/task/${task.id}/edit`} className="btn-primary">
+              Edit Task
+            </Link>
+            <button 
+              onClick={() => setShowDeleteDialog(true)}
+              className="btn-danger"
+              disabled={deleting}
+            >
+              {deleting ? 'Deleting...' : 'Delete Task'}
+            </button>
+            <Link to="/add-task" className="btn-outline">
               Add Another Task
             </Link>
           </div>
         </div>
       </div>
+
+      <ConfirmDialog
+        isOpen={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        onConfirm={handleDeleteTask}
+        title="Delete Task"
+        message={`Are you sure you want to delete "${task?.title}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        isDestructive={true}
+      />
     </div>
   );
 };

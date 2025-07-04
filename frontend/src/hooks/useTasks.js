@@ -33,6 +33,34 @@ export const useTasks = () => {
     }
   }, [fetchTasks]);
 
+  const updateTask = useCallback(async (taskData) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await taskAPI.updateTask(taskData);
+      await fetchTasks();
+    } catch (err) {
+      setError(err.message || 'Failed to update task');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchTasks]);
+
+  const deleteTask = useCallback(async (taskId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await taskAPI.deleteTask(taskId);
+      await fetchTasks();
+    } catch (err) {
+      setError(err.message || 'Failed to delete task');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }, [fetchTasks]);
+
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
@@ -43,5 +71,7 @@ export const useTasks = () => {
     error,
     fetchTasks,
     addTask,
+    updateTask,
+    deleteTask,
   };
 }; 

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AddTaskPage from './pages/AddTaskPage';
 import TaskDetailPage from './pages/TaskDetailPage';
+import EditTaskPage from './pages/EditTaskPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import WelcomePage from './pages/WelcomePage';
@@ -44,6 +45,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <TaskDetailPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/task/:taskId/edit" 
+                element={
+                  <ProtectedRoute>
+                    <EditTaskPage />
                   </ProtectedRoute>
                 } 
               />

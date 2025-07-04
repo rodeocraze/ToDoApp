@@ -6,15 +6,15 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-section">
-            <h4>TodoApp</h4>
-            <p>Your productivity companion</p>
+            <h4>Zen</h4>
+            <p>Make organizing easy</p>
           </div>
           <div className="footer-section">
             <h4>Features</h4>
             <ul>
-              <li>Task Management</li>
-              <li>Priority Levels</li>
-              <li>Real-time Updates</li>
+              <li>Mindful Organization</li>
+              <li>Clear Priorities</li>
+              <li>Effortless Simplicity</li>
             </ul>
           </div>
           <div className="footer-section">
@@ -23,7 +23,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; {currentYear} TodoApp. All rights reserved.</p>
+          <p>&copy; {currentYear} Zen. All rights reserved.</p>
         </div>
       </div>
     </footer>

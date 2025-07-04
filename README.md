@@ -1,15 +1,15 @@
-# TodoApp - Full-Stack Task Management Application
+# Zen - Make organizing easy
 
-A modern, full-stack todo application built with **Spring Boot** backend and **React + Vite** frontend. Features a clean, responsive design with full CRUD operations for task management.
+A minimalist, full-stack task management application built with **Spring Boot** backend and **React + Vite** frontend. Features a clean, Notion-inspired design with intuitive task organization.
 
-![TodoApp Preview](https://img.shields.io/badge/Status-Active-green) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen) ![React](https://img.shields.io/badge/React-18.x-blue) ![Vite](https://img.shields.io/badge/Vite-Latest-purple)
+![Zen Preview](https://img.shields.io/badge/Status-Active-green) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen) ![React](https://img.shields.io/badge/React-18.x-blue) ![Vite](https://img.shields.io/badge/Vite-Latest-purple)
 
 ## 🚀 Features
 
 - ✅ **Full CRUD Operations** - Create, Read, Update, Delete tasks
 - 🎯 **Priority System** - HIGH, MEDIUM, LOW priority levels with color coding
 - 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile
-- 🎨 **Modern UI** - Glass morphism effects with gradient backgrounds
+- 🎨 **Zen Design** - Clean, minimalist interface inspired by Notion
 - 🔄 **Real-time Updates** - Instant task updates across the application
 - 📊 **Task Management** - Detailed task views with creation/update timestamps
 - 🛣️ **React Router** - Multi-page navigation with clean URLs
@@ -32,7 +32,7 @@ A modern, full-stack todo application built with **Spring Boot** backend and **R
 ## 📁 Project Structure
 
 ```
-ToDoApp/
+Zen/
 ├── backend copy/                 # Spring Boot Backend
 │   ├── src/main/java/com/example/backend/
 │   │   ├── Controllers/         # REST API Controllers

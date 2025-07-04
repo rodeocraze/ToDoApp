@@ -72,7 +72,7 @@ const RegisterPage = () => {
     <div className="auth-page">
       <div className="page-header">
         <h1>Create Account</h1>
-        <p>Join TodoApp and start organizing your tasks</p>
+        <p>Join Zen and discover effortless organization</p>
       </div>
 
       <div className="auth-container">

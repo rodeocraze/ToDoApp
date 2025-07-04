@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="nav-container">
         <div className="nav-brand">
           <Link to={isAuthenticated ? "/" : "/welcome"}>
-            <h2>TodoApp</h2>
+            <h2>Zen</h2>
           </Link>
         </div>
         
@@ -29,7 +29,7 @@ const Navbar = () => {
                 to="/" 
                 className={`nav-link ${isActive('/') ? 'active' : ''}`}
               >
-                All Tasks
+                Tasks
               </Link>
               <Link 
                 to="/add-task" 
