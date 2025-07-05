@@ -13,7 +13,11 @@ const EditTaskPage = () => {
     category: '',
     priority: false,
     completed: false,
-    dueDate: ''
+    archived: false,
+    startDate: '',
+    dueDate: '',
+    startTime: '',
+    endTime: ''
   });
   
   const [loading, setLoading] = useState(true);
@@ -26,7 +30,9 @@ const EditTaskPage = () => {
         setLoading(true);
         const taskData = await taskAPI.getTaskById(taskId);
         
-        // Format the dueDate for the input field
+        // Format the dates for the input fields
+        const formattedStartDate = taskData.startDate ? 
+          new Date(taskData.startDate).toISOString().split('T')[0] : '';
         const formattedDueDate = taskData.dueDate ? 
           new Date(taskData.dueDate).toISOString().split('T')[0] : '';
         
@@ -37,7 +43,11 @@ const EditTaskPage = () => {
           category: taskData.category || '',
           priority: taskData.priority || false,
           completed: taskData.completed || false,
-          dueDate: formattedDueDate
+          archived: taskData.archived || false,
+          startDate: formattedStartDate,
+          dueDate: formattedDueDate,
+          startTime: taskData.startTime || '',
+          endTime: taskData.endTime || ''
         });
       } catch (err) {
         console.error('Error fetching task:', err);
@@ -58,11 +68,41 @@ const EditTaskPage = () => {
     }));
   };
 
+  const validateForm = () => {
+    if (!task.title.trim()) {
+      setError('Task title is required');
+      return false;
+    }
+
+    // Validate date fields if both are provided
+    if (task.startDate && task.dueDate) {
+      const startDate = new Date(task.startDate);
+      const dueDate = new Date(task.dueDate);
+      
+      if (startDate > dueDate) {
+        setError('Due date must be on or after start date');
+        return false;
+      }
+    }
+
+    // Validate time fields if both are provided
+    if (task.startTime && task.endTime) {
+      const startTime = new Date(`2000-01-01T${task.startTime}`);
+      const endTime = new Date(`2000-01-01T${task.endTime}`);
+      
+      if (startTime >= endTime) {
+        setError('End time must be after start time');
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!task.title.trim()) {
-      setError('Task title is required');
+    if (!validateForm()) {
       return;
     }
 
@@ -78,7 +118,11 @@ const EditTaskPage = () => {
         category: task.category.trim(),
         priority: task.priority,
         completed: task.completed,
-        dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null
+        archived: task.archived,
+        startDate: task.startDate ? new Date(task.startDate).toISOString() : null,
+        dueDate: task.dueDate ? new Date(task.dueDate).toISOString() : null,
+        startTime: task.startTime || null,
+        endTime: task.endTime || null
       };
       
       await taskAPI.updateTask(taskData);
@@ -172,6 +216,20 @@ const EditTaskPage = () => {
                 disabled={saving}
               />
             </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="startDate">Start Date</label>
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                value={task.startDate}
+                onChange={handleInputChange}
+                disabled={saving}
+              />
+            </div>
 
             <div className="form-group">
               <label htmlFor="dueDate">Due Date</label>
@@ -180,6 +238,32 @@ const EditTaskPage = () => {
                 id="dueDate"
                 name="dueDate"
                 value={task.dueDate}
+                onChange={handleInputChange}
+                disabled={saving}
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="startTime">Start Time</label>
+              <input
+                type="time"
+                id="startTime"
+                name="startTime"
+                value={task.startTime}
+                onChange={handleInputChange}
+                disabled={saving}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="endTime">End Time</label>
+              <input
+                type="time"
+                id="endTime"
+                name="endTime"
+                value={task.endTime}
                 onChange={handleInputChange}
                 disabled={saving}
               />
@@ -212,6 +296,22 @@ const EditTaskPage = () => {
                 />
                 <span className="checkmark"></span>
                 Mark as Completed
+              </label>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group checkbox-group">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  name="archived"
+                  checked={task.archived}
+                  onChange={handleInputChange}
+                  disabled={saving}
+                />
+                <span className="checkmark"></span>
+                Archive Task
               </label>
             </div>
           </div>

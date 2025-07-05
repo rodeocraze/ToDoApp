@@ -10,8 +10,12 @@ const AddTaskPage = () => {
     description: '',
     category: '',
     priority: false, // boolean: false = low, true = high
+    startDate: '',
     dueDate: '',
+    startTime: '',
+    endTime: '',
     completed: false,
+    archived: false,
   });
   const [errors, setErrors] = useState({});
 
@@ -20,6 +24,26 @@ const AddTaskPage = () => {
 
     if (!formData.title.trim()) {
       newErrors.title = 'Title is required';
+    }
+
+    // Validate date fields if both are provided
+    if (formData.startDate && formData.dueDate) {
+      const startDate = new Date(formData.startDate);
+      const dueDate = new Date(formData.dueDate);
+      
+      if (startDate > dueDate) {
+        newErrors.dueDate = 'Due date must be on or after start date';
+      }
+    }
+
+    // Validate time fields if both are provided
+    if (formData.startTime && formData.endTime) {
+      const startTime = new Date(`2000-01-01T${formData.startTime}`);
+      const endTime = new Date(`2000-01-01T${formData.endTime}`);
+      
+      if (startTime >= endTime) {
+        newErrors.endTime = 'End time must be after start time';
+      }
     }
 
     setErrors(newErrors);
@@ -42,8 +66,13 @@ const AddTaskPage = () => {
         category: formData.category,
         priority: formData.priority,
         completed: formData.completed,
-        // Convert dueDate to Date object if provided
+        archived: formData.archived,
+        // Convert dates to Date objects if provided
+        startDate: formData.startDate ? new Date(formData.startDate) : null,
         dueDate: formData.dueDate ? new Date(formData.dueDate) : null,
+        // Send time strings directly - backend expects LocalTime format
+        startTime: formData.startTime || null,
+        endTime: formData.endTime || null,
         // createdDate will be set by backend
       };
 
@@ -130,6 +159,18 @@ const AddTaskPage = () => {
           </div>
 
           <div className="form-group">
+            <label htmlFor="startDate">Start Date</label>
+            <input
+              type="date"
+              id="startDate"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              disabled={loading}
+            />
+          </div>
+
+          <div className="form-group">
             <label htmlFor="dueDate">Due Date</label>
             <input
               type="date"
@@ -137,8 +178,38 @@ const AddTaskPage = () => {
               name="dueDate"
               value={formData.dueDate}
               onChange={handleChange}
+              className={errors.dueDate ? 'error' : ''}
               disabled={loading}
             />
+            {errors.dueDate && <span className="error-message">{errors.dueDate}</span>}
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="startTime">Start Time</label>
+              <input
+                type="time"
+                id="startTime"
+                name="startTime"
+                value={formData.startTime}
+                onChange={handleChange}
+                disabled={loading}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="endTime">End Time</label>
+              <input
+                type="time"
+                id="endTime"
+                name="endTime"
+                value={formData.endTime}
+                onChange={handleChange}
+                className={errors.endTime ? 'error' : ''}
+                disabled={loading}
+              />
+              {errors.endTime && <span className="error-message">{errors.endTime}</span>}
+            </div>
           </div>
 
           <div className="form-group checkbox-group">
@@ -164,6 +235,19 @@ const AddTaskPage = () => {
                 disabled={loading}
               />
               <span className="checkbox-text">Mark as Completed</span>
+            </label>
+          </div>
+
+          <div className="form-group checkbox-group">
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                name="archived"
+                checked={formData.archived}
+                onChange={handleChange}
+                disabled={loading}
+              />
+              <span className="checkbox-text">Archive Task</span>
             </label>
           </div>
 

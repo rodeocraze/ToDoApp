@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -30,12 +30,15 @@ public class Task {
     
     @Column(name = "created_date")
     public LocalDate createdDate;
-    
-    public Date dueDate;
+    public LocalDate startDate;
+    public LocalDate dueDate;
+    public LocalTime startTime;
+    public LocalTime endTime;
     public String description;
     public String category;
     public boolean priority;
     public boolean completed;
+    public boolean archived;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

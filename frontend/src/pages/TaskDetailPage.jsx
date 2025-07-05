@@ -13,6 +13,7 @@ const TaskDetailPage = () => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [archiving, setArchiving] = useState(false);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -60,6 +61,24 @@ const TaskDetailPage = () => {
     }
   };
 
+  const handleArchiveToggle = async () => {
+    try {
+      setArchiving(true);
+      const updatedTask = await taskAPI.updateTask(task.id, { 
+        ...task, 
+        archived: !task.archived 
+      });
+      setTask(updatedTask);
+      setSuccessMessage(`Task ${task.archived ? 'unarchived' : 'archived'} successfully!`);
+      setTimeout(() => setSuccessMessage(null), 5000);
+    } catch (err) {
+      console.error('Error archiving task:', err);
+      setError(err.message || 'Failed to archive task');
+    } finally {
+      setArchiving(false);
+    }
+  };
+
   const getPriorityColor = (priority) => {
     // Backend uses boolean: true = high priority, false = low priority
     return priority ? 'priority-high' : 'priority-low';
@@ -72,8 +91,36 @@ const TaskDetailPage = () => {
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
-    return date.toLocaleDateString() + ' at ' + date.toLocaleTimeString();
+    return date.toLocaleDateString();
   };
+
+  const formatTime = (timeString) => {
+    if (!timeString) return null;
+    // Handle LocalTime format (HH:MM:SS or HH:MM)
+    const timeParts = timeString.split(':');
+    const hours = parseInt(timeParts[0]);
+    const minutes = timeParts[1];
+    
+    // Convert to 12-hour format
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    
+    return `${displayHours}:${minutes} ${ampm}`;
+  };
+
+  const formatDateWithTime = (dateString, timeString) => {
+    if (!dateString) return 'No date set';
+    
+    const dateOnly = formatDate(dateString);
+    const timeFormatted = formatTime(timeString);
+    
+    if (timeFormatted) {
+      return `${dateOnly} at ${timeFormatted}`;
+    }
+    return dateOnly;
+  };
+
+
 
   if (loading) {
     return (
@@ -146,6 +193,9 @@ const TaskDetailPage = () => {
                 {task.completed && (
                   <span className="completed-badge">✓ Completed</span>
                 )}
+                {task.archived && (
+                  <span className="archived-badge">Archived</span>
+                )}
               </div>
             </div>
             <div className="task-id">
@@ -189,8 +239,12 @@ const TaskDetailPage = () => {
                   <span>{formatDate(task.createdDate)}</span>
                 </div>
                 <div className="info-item">
+                  <label>Start Date:</label>
+                  <span>{formatDateWithTime(task.startDate, task.startTime)}</span>
+                </div>
+                <div className="info-item">
                   <label>Due Date:</label>
-                  <span>{task.dueDate ? formatDate(task.dueDate) : 'No due date'}</span>
+                  <span>{formatDateWithTime(task.dueDate, task.endTime)}</span>
                 </div>
               </div>
             </div>
@@ -206,6 +260,13 @@ const TaskDetailPage = () => {
             <Link to={`/task/${task.id}/edit`} className="btn-primary">
               Edit Task
             </Link>
+            <button 
+              onClick={handleArchiveToggle}
+              className="btn-archive"
+              disabled={archiving}
+            >
+              {archiving ? 'Processing...' : (task.archived ? 'Unarchive' : 'Archive')}
+            </button>
             <button 
               onClick={() => setShowDeleteDialog(true)}
               className="btn-danger"

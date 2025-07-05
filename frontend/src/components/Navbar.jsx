@@ -1,9 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = () => {
   const location = useLocation();
   const { user, logout, isAuthenticated } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -32,12 +34,21 @@ const Navbar = () => {
                 Tasks
               </Link>
               <Link 
+                to="/calendar" 
+                className={`nav-link ${isActive('/calendar') ? 'active' : ''}`}
+              >
+                Calendar
+              </Link>
+              <Link 
                 to="/add-task" 
                 className={`nav-link ${isActive('/add-task') ? 'active' : ''}`}
               >
                 Add Task
               </Link>
               <div className="nav-user">
+                <button onClick={toggleTheme} className="theme-toggle-btn">
+                  {isDarkMode ? '☀️' : '🌙'}
+                </button>
                 <span className="nav-username">Welcome, {user?.username}</span>
                 <button onClick={handleLogout} className="nav-logout-btn">
                   Logout
