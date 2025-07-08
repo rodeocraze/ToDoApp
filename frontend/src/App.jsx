@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import CalendarPage from './pages/CalendarPage';
@@ -16,13 +15,12 @@ import './App.css';
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <Router>
-          <div className="App">
-            <Navbar />
-            
-            <main className="main-content">
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Navbar />
+          
+          <main className="main-content">
             <Routes>
               <Route path="/welcome" element={<WelcomePage />} />
               <Route path="/login" element={<LoginPage />} />
@@ -74,7 +72,6 @@ function App() {
         </div>
       </Router>
     </AuthProvider>
-  </ThemeProvider>
   );
 }
 

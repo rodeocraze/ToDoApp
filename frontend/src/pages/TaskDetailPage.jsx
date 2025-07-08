@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { taskAPI } from '../services/api';
 import ConfirmDialog from '../components/ConfirmDialog';
+import SubtaskForm from '../components/SubtaskForm';
+import SubtaskList from '../components/SubtaskList';
 
 const TaskDetailPage = () => {
   const { taskId } = useParams();
@@ -14,6 +16,8 @@ const TaskDetailPage = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [archiving, setArchiving] = useState(false);
+  const [showSubtaskForm, setShowSubtaskForm] = useState(false);
+  const [subtaskRefreshTrigger, setSubtaskRefreshTrigger] = useState(0);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -118,6 +122,13 @@ const TaskDetailPage = () => {
       return `${dateOnly} at ${timeFormatted}`;
     }
     return dateOnly;
+  };
+
+  const handleSubtaskAdded = () => {
+    setShowSubtaskForm(false);
+    setSubtaskRefreshTrigger(prev => prev + 1);
+    setSuccessMessage('Subtask added successfully!');
+    setTimeout(() => setSuccessMessage(null), 5000);
   };
 
 
@@ -249,7 +260,35 @@ const TaskDetailPage = () => {
               </div>
             </div>
           </div>
+        </div>
 
+        {/* Subtasks Section */}
+        <div className="subtasks-container">
+          <div className="subtasks-header">
+            <h3>Subtasks</h3>
+            <button 
+              onClick={() => setShowSubtaskForm(!showSubtaskForm)}
+              className="btn-primary btn-sm"
+            >
+              {showSubtaskForm ? 'Cancel' : 'Add Subtask'}
+            </button>
+          </div>
+
+          {showSubtaskForm && (
+            <SubtaskForm 
+              taskId={task.id}
+              onSubtaskAdded={handleSubtaskAdded}
+              onCancel={() => setShowSubtaskForm(false)}
+            />
+          )}
+
+          <SubtaskList 
+            taskId={task.id}
+            refreshTrigger={subtaskRefreshTrigger}
+          />
+        </div>
+
+        <div className="task-detail-card task-actions-card">
           <div className="task-detail-actions">
             <button 
               onClick={() => navigate('/')}

@@ -103,4 +103,67 @@ export const taskAPI = {
   },
 };
 
+// Subtask API
+export const subtaskAPI = {
+  addSubtask: async (taskId, subtaskData) => {
+    try {
+      const response = await api.post(`/${taskId}/add/subtask`, subtaskData);
+      return response.data;
+    } catch (error) {
+      console.error('Error adding subtask:', error);
+      throw new Error('Failed to add subtask');
+    }
+  },
+
+  getSubtasksForTask: async (taskId) => {
+    try {
+      const response = await api.get(`/${taskId}/subtasks`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching subtasks:', error);
+      throw new Error('Failed to fetch subtasks');
+    }
+  },
+
+  getAllSubtasks: async () => {
+    try {
+      const response = await api.get('/subtasks');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching all subtasks:', error);
+      throw new Error('Failed to fetch all subtasks');
+    }
+  },
+
+  getSubtaskById: async (subtaskId) => {
+    try {
+      const response = await api.get(`/subtasks/${subtaskId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching subtask:', error);
+      throw new Error('Failed to fetch subtask');
+    }
+  },
+
+  updateSubtask: async (subtaskData) => {
+    try {
+      const response = await api.put('/subtasks/update', subtaskData);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating subtask:', error);
+      throw new Error('Failed to update subtask');
+    }
+  },
+
+  deleteSubtask: async (subtaskId) => {
+    try {
+      const response = await api.delete(`/subtasks/${subtaskId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting subtask:', error);
+      throw new Error('Failed to delete subtask');
+    }
+  },
+};
+
 export default api; 
